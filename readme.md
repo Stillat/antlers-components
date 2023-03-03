@@ -14,7 +14,7 @@ composer require stillat/antlers-components
 
 Antlers Components requires at least PHP 8.1 and:
 
-* Statamic versions `3.3.*` or `3.4.*` or higher
+* Statamic versions `^3.3.67` or `3.4.*` or higher
 * Laravel `9.36` or higher
 
 This package provides a familiar syntax for Livewire components, and it is compiled into the Antlers tags provided by this package:
