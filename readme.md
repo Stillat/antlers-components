@@ -19,7 +19,7 @@ Antlers Components requires at least PHP 8.1 and:
 
 This package provides a familiar syntax for Livewire components, and it is compiled into the Antlers tags provided by this package:
 
-https://statamic.com/addons/jonassiewertsen/livewire
+[https://statamic.com/addons/jonassiewertsen/livewire](https://statamic.com/addons/jonassiewertsen/livewire)
 
 In order to use the Livewire syntax, you will also need to install it using the following command:
 
@@ -29,7 +29,7 @@ composer require jonassiewertsen/statamic-livewire
 
 For support/reporting issues related to the Livewire functionality beyond compilation errors, please use the following GitHub link:
 
-https://github.com/jonassiewertsen/statamic-livewire
+[https://github.com/jonassiewertsen/statamic-livewire](https://github.com/jonassiewertsen/statamic-livewire)
 
 ## Using Blade Components
 
