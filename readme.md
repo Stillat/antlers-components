@@ -1,6 +1,6 @@
 ![Antlers Components](.art/banner.png)
 
-Antlers Components is a Statamic addon that makes creating isolated, reusable Antlers partials easy and integrating existing Blade and Livewire components using a familiar syntax.
+Antlers Components is a Statamic addon that makes creating isolated, reusable Antlers partials easy and integrating existing Blade and Livewire components a breeze using a familiar syntax.
 
 ## Installation
 
