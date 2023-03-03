@@ -164,7 +164,7 @@ When using this syntax, we do not need to prefix named slots with `slot:` inside
 
 ### Nesting Antlers Component Partials
 
-We may also nest partial components by including them within other components. Like with regular components, we most specify what values we want to be passed along to our nested components:
+We may also nest partial components by including them within other components. Like with regular components, we must specify what values we want to be passed along to our nested components:
 
 ```antlers
 <div>
