@@ -24,7 +24,7 @@
     "require": {
         "php": "^8.1",
         "stillat/blade-parser": "^1.2",
-        "statamic/cms": "^3.3.67 || ^3.4",
+        "statamic/cms": "^3.4",
         "laravel/framework": "^9.36"
     },
     "require-dev": {
