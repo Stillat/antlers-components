@@ -1,0 +1,1 @@
+I am the Blade: @isset($title) {{ $title }}@endisset.

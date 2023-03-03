@@ -1,0 +1,8 @@
+<div>
+    {{ title }}
+
+    Parent Nested: {{ if __is_nested }}Yes{{ else }}No{{ /if }}
+    <ul>
+        {{ items }}<a-child :$title />{{ /items }}
+    </ul>
+</div>
