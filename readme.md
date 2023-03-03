@@ -94,7 +94,7 @@ This package supports the following parameter types when compiling component tag
 
 {{ title = 'The title'; }}
 
-<x-alert title="{title}" />
+<x-alert title="title" />
 ```
 
 **Attribute**:
