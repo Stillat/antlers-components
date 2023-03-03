@@ -21,7 +21,7 @@ This package provides a familiar syntax for Livewire components, and it is compi
 
 https://statamic.com/addons/jonassiewertsen/livewire
 
-In order to use the Livewire syntax, you will also need to install it using the following:
+In order to use the Livewire syntax, you will also need to install it using the following command:
 
 ```bash
 composer require jonassiewertsen/statamic-livewire
