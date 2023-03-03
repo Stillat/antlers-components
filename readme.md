@@ -149,7 +149,7 @@ we can render this Antlers partial in our main template like so:
 > Note: We have to explicitly allow the current article's title and content values by supplying them via. parameters. Without this, it will default to the current page's values.
 
 
-When using this syntax, we do not need to prefix named slots with `slot:` inside our partial. Additionally, we also have access to an attributes bag. Parameters supplying to named slots will be available within the partial, as well:
+When using this syntax, we do not need to prefix named slots with `slot:` inside our partial. Additionally, we also have access to an attributes bag. Parameters supplied to named slots will be available within the partial, as well:
 
 ```antlers
 {{ collection:articles }}
