@@ -66,4 +66,23 @@ EXP;
 
         $this->assertSame($expected, $this->renderString($template));
     }
+
+    public function testRenderingAnonymousComponents()
+    {
+        $template = <<<'EOT'
+<x-button />
+<x-input />
+<x-input type="password" />
+EOT;
+
+        $expected = <<<'EXP'
+<div>
+    A Blade Button!
+</div>
+<input type="text" />
+<input type="password" />
+EXP;
+
+        $this->assertSame($expected, $this->renderString($template));
+    }
 }
