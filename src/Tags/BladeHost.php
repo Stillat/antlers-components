@@ -2,6 +2,7 @@
 
 namespace Stillat\AntlersComponents\Tags;
 
+use Illuminate\View\AnonymousComponent;
 use Illuminate\View\Compilers\BladeCompiler;
 use Illuminate\View\Compilers\ComponentTagCompiler;
 use Illuminate\View\ComponentAttributeBag;
@@ -27,16 +28,29 @@ class BladeHost extends Tags
         $componentTagCompiler = $this->makeComponentTagCompiler();
         $componentName = $this->params->get('component');
         $className = $componentTagCompiler->componentClass($componentName);
+
         $attributes = new ComponentAttributeBag($this->params->except('component')->all());
         $constructorParameters = [];
 
         $scopeData = $this->context->all();
         $scopeData = array_merge($scopeData, $this->params->except('component')->all());
 
+        $isAnonymous = false;
+        $anonymousViewName = $className;
+
+        if (! class_exists($className)) {
+            $isAnonymous = true;
+            $className = AnonymousComponent::class;
+        }
+
         if ($constructor = (new ReflectionClass($className))->getConstructor()) {
             $constructorParameters = collect($constructor->getParameters())->map->getName()->all();
             $attributes = $attributes->except($constructorParameters);
             $constructorParameters = collect($scopeData)->only($constructorParameters)->all();
+        }
+
+        if ($isAnonymous) {
+            $constructorParameters = array_merge($constructorParameters, ['view' => $anonymousViewName, 'data' => []]);
         }
 
         $__env = $this->context['__env'] ?? view();
