@@ -2,6 +2,8 @@
 
 namespace Stillat\AntlersComponents\Tests;
 
+use Stillat\AntlersComponents\Utilities\StringUtilities;
+
 class IsolatedPartialTest extends CompilerTestCase
 {
     protected array $data = [
@@ -44,7 +46,7 @@ Isolated 2: Test slot value:
 Param Isolated: Test slot value: Title Three
 EOT;
 
-        $this->assertSame($expected, $this->renderString($template, $this->data));
+        $this->assertSame(StringUtilities::normalizeLineEndings($expected), $this->renderString($template, $this->data));
     }
 
     public function testIsolatedPartialsTossDataAway()
@@ -63,7 +65,7 @@ Test slot value: My new title
 Hello!
 EXP;
 
-        $this->assertSame($expected, $this->renderString($template));
+        $this->assertSame(StringUtilities::normalizeLineEndings($expected), $this->renderString($template));
     }
 
     public function testParentIsolatedPartialPassesDataToNestedPartials()
@@ -92,7 +94,7 @@ Test slot value: Test slot value: Inner2: A new title
 Hello!
 EXP;
 
-        $this->assertSame($expected, $this->renderString($template));
+        $this->assertSame(StringUtilities::normalizeLineEndings($expected), $this->renderString($template));
     }
 
     public function testBladePartialsAreIsolatedFromParentData()
@@ -127,6 +129,6 @@ Isolated 2: I am the Blade: .
 Param Isolated: I am the Blade:  Title Three.
 EXP;
 
-        $this->assertSame($expected, $this->renderString($template, $this->data));
+        $this->assertSame(StringUtilities::normalizeLineEndings($expected), $this->renderString($template, $this->data));
     }
 }

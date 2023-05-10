@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\Blade;
 use Illuminate\View\Compilers\BladeCompiler;
 use Stillat\AntlersComponents\Tests\Components\Alert;
 use Stillat\AntlersComponents\Tests\Components\Card;
+use Stillat\AntlersComponents\Utilities\StringUtilities;
 
 class BladeComponentsTest extends CompilerTestCase
 {
@@ -31,7 +32,7 @@ EOT;
 </div>
 EOT;
 
-        $this->assertSame($expected, $this->renderString($template));
+        $this->assertSame(StringUtilities::normalizeLineEndings($expected), $this->renderString($template));
     }
 
     public function testBladeComponentsWithSlots()
@@ -64,7 +65,7 @@ EOT;
 </div>
 EXP;
 
-        $this->assertSame($expected, $this->renderString($template));
+        $this->assertSame(StringUtilities::normalizeLineEndings($expected), $this->renderString($template));
     }
 
     public function testRenderingAnonymousComponents()
@@ -83,6 +84,6 @@ EOT;
 <input type="password" />
 EXP;
 
-        $this->assertSame($expected, $this->renderString($template));
+        $this->assertSame(StringUtilities::normalizeLineEndings($expected), $this->renderString($template));
     }
 }

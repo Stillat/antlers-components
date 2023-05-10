@@ -2,6 +2,8 @@
 
 namespace Stillat\AntlersComponents\Tests;
 
+use Stillat\AntlersComponents\Utilities\StringUtilities;
+
 class AntlersComponentsTest extends CompilerTestCase
 {
     public function testItCanRenderBladeTemplates()
@@ -38,7 +40,7 @@ I am the slot content.
 End
 EOT;
 
-        $this->assertSame($expected, $this->renderString($template));
+        $this->assertSame(StringUtilities::normalizeLineEndings($expected), $this->renderString($template));
     }
 
     public function testItCanRenderBladeTemplateNamedSlotsWithoutBeingABladeComponent()
@@ -66,7 +68,7 @@ EOT;
 </div>
 EOT;
 
-        $this->assertSame($expected, $this->renderString($template));
+        $this->assertSame(StringUtilities::normalizeLineEndings($expected), $this->renderString($template));
     }
 
     public function testItCanRenderBladeTemplateNamedSlotsWithoutBeingABladeComponentMixedStyles()
@@ -94,7 +96,7 @@ EOT;
 </div>
 EOT;
 
-        $this->assertSame($expected, $this->renderString($template));
+        $this->assertSame(StringUtilities::normalizeLineEndings($expected), $this->renderString($template));
     }
 
     public function testAttributesCanBeUsedInsideAntlers()
@@ -122,7 +124,7 @@ EOT;
 </div>
 EOT;
 
-        $this->assertSame($expected, $this->renderString($template));
+        $this->assertSame(StringUtilities::normalizeLineEndings($expected), $this->renderString($template));
     }
 
     public function testAttributesCanBeUsedInsideAntlersWithMainAttributes()
@@ -150,7 +152,7 @@ EOT;
 </div>
 EOT;
 
-        $this->assertSame($expected, $this->renderString($template));
+        $this->assertSame(StringUtilities::normalizeLineEndings($expected), $this->renderString($template));
     }
 
     public function testAttributesCanBeUsedInsideAntlersWithMainAttributesIsolated()
@@ -178,7 +180,7 @@ EOT;
 </div>
 EOT;
 
-        $this->assertSame($expected, $this->renderString($template));
+        $this->assertSame(StringUtilities::normalizeLineEndings($expected), $this->renderString($template));
     }
 
     public function testParentNestedBehavior()
@@ -207,6 +209,6 @@ EOT;
 </div>
 EOT;
 
-        $this->assertSame($expected, $this->renderString($template, $data));
+        $this->assertSame(StringUtilities::normalizeLineEndings($expected), $this->renderString($template, $data));
     }
 }

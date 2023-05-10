@@ -2,6 +2,8 @@
 
 namespace Stillat\AntlersComponents\Tests;
 
+use Stillat\AntlersComponents\Utilities\StringUtilities;
+
 class BasicTemplateTest extends CompilerTestCase
 {
     public function testItCompilesPartials()
@@ -165,7 +167,7 @@ EOT;
 {{ /%isolated_partial }}
 EXPECTED;
 
-        $this->assertSame($expected, trim($this->compiler->compile($template)));
+        $this->assertSame(StringUtilities::normalizeLineEndings($expected), trim($this->compiler->compile($template)));
     }
 
     public function testItCompilesParameters()
@@ -178,6 +180,6 @@ EOT;
 {{ %isolated_partial src="figure" :title="title" :a-different-title="aDifferentTitle" :title="title" title="title" title="title" /}}
 EOT;
 
-        $this->assertSame($expected, trim($this->compiler->compile($template)));
+        $this->assertSame(StringUtilities::normalizeLineEndings($expected), trim($this->compiler->compile($template)));
     }
 }
