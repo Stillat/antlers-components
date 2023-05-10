@@ -20,7 +20,7 @@ EOT;
 {{ /%isolated_partial }}
 EXPECTED;
 
-        $this->assertSame($expected, trim($this->compiler->compile($template)));
+        $this->assertSame(StringUtilities::normalizeLineEndings($expected), trim($this->compiler->compile($template)));
     }
 
     public function testItCompilesIsolatedPartials()
@@ -37,7 +37,7 @@ EOT;
 {{ /%isolated_partial }}
 EXPECTED;
 
-        $this->assertSame($expected, trim($this->compiler->compile($template)));
+        $this->assertSame(StringUtilities::normalizeLineEndings($expected), trim($this->compiler->compile($template)));
     }
 
     public function testItCompilesAlternativeSyntax()
@@ -54,7 +54,7 @@ EOT;
 {{ /%isolated_partial }}
 EXPECTED;
 
-        $this->assertSame($expected, trim($this->compiler->compile($template)));
+        $this->assertSame(StringUtilities::normalizeLineEndings($expected), trim($this->compiler->compile($template)));
     }
 
     public function testItCompilesLivewireComponents()
@@ -69,7 +69,7 @@ EOT;
 {{ %livewire:counter   /}}
 EXPECTED;
 
-        $this->assertSame($expected, trim($this->compiler->compile($template)));
+        $this->assertSame(StringUtilities::normalizeLineEndings($expected), trim($this->compiler->compile($template)));
     }
 
     public function testItCompilesBladeComponents()
@@ -86,7 +86,7 @@ EOT;
 {{ /%blade_host:component }}
 EXPECTED;
 
-        $this->assertSame($expected, trim($this->compiler->compile($template)));
+        $this->assertSame(StringUtilities::normalizeLineEndings($expected), trim($this->compiler->compile($template)));
     }
 
     public function testItCompilesEverythingTogether()
