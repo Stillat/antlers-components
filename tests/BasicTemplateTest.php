@@ -213,4 +213,38 @@ EXP;
 
         $this->assertSame($expected, trim($this->compiler->compile($template)));
     }
+
+    public function testSimpleUnknownEchoParametersAreCompiled()
+    {
+        $template = <<<'EOT'
+<x-button {{ js_attributes }}>
+  Submit
+</x-button>
+EOT;
+
+        $expected = <<<'EXP'
+{{ %blade_host:component component="button" :js_attributes="js_attributes" }}
+  Submit
+{{ /%blade_host:component }}
+EXP;
+
+        $this->assertSame($expected, trim($this->compiler->compile($template)));
+    }
+
+    public function testComplexUnknownEchoParametersAreCompiled()
+    {
+        $template = <<<'EOT'
+<x-button {{ js_attributes | upper }}>
+  Submit
+</x-button>
+EOT;
+
+        $expected = <<<'EXP'
+{{ %blade_host:component component="button" js_attributes="{js_attributes | upper}" }}
+  Submit
+{{ /%blade_host:component }}
+EXP;
+
+        $this->assertSame($expected, trim($this->compiler->compile($template)));
+    }
 }
