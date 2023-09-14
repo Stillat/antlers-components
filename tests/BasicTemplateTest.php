@@ -182,4 +182,35 @@ EOT;
 
         $this->assertSame(StringUtilities::normalizeLineEndings($expected), trim($this->compiler->compile($template)));
     }
+
+    public function testCompilingInterpolatedValues()
+    {
+        $template = <<<'EOT'
+<x-button @click="{{ handle }}++">
+  Submit
+</x-button>
+EOT;
+
+        $expected = <<<'EXP'
+{{ %blade_host:component component="button" @click="{{ handle }}++" }}
+  Submit
+{{ /%blade_host:component }}
+EXP;
+
+        $this->assertSame($expected, trim($this->compiler->compile($template)));
+
+        $template = <<<'EOT'
+<x-button @click="{handle}++">
+  Submit
+</x-button>
+EOT;
+
+        $expected = <<<'EXP'
+{{ %blade_host:component component="button" @click="{handle}++" }}
+  Submit
+{{ /%blade_host:component }}
+EXP;
+
+        $this->assertSame($expected, trim($this->compiler->compile($template)));
+    }
 }

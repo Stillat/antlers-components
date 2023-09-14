@@ -26,6 +26,8 @@ trait CompilesParameters
                 $compiledParameters[] = ':'.$parameter->materializedName.'="'.mb_substr($parameter->name, 2).'"';
             } elseif ($parameter->type == ParameterType::DynamicVariable) {
                 $compiledParameters[] = ':'.$parameter->materializedName.'="'.$parameter->value.'"';
+            } elseif ($parameter->type == ParameterType::InterpolatedValue) {
+                $compiledParameters[] = $parameter->name.'="'.$this->getParamValue($parameter->value).'"';
             }
         }
 
