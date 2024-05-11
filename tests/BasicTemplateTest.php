@@ -197,7 +197,7 @@ EOT;
 {{ /%blade_host:component }}
 EXP;
 
-        $this->assertSame($expected, trim($this->compiler->compile($template)));
+        $this->assertSame(StringUtilities::normalizeLineEndings($expected), StringUtilities::normalizeLineEndings(trim($this->compiler->compile($template))));
 
         $template = <<<'EOT'
 <x-button @click="{handle}++">
@@ -211,7 +211,7 @@ EOT;
 {{ /%blade_host:component }}
 EXP;
 
-        $this->assertSame($expected, trim($this->compiler->compile($template)));
+        $this->assertSame(StringUtilities::normalizeLineEndings($expected), StringUtilities::normalizeLineEndings(trim($this->compiler->compile($template))));
     }
 
     public function testSimpleUnknownEchoParametersAreCompiled()
@@ -228,7 +228,7 @@ EOT;
 {{ /%blade_host:component }}
 EXP;
 
-        $this->assertSame($expected, trim($this->compiler->compile($template)));
+        $this->assertSame(StringUtilities::normalizeLineEndings($expected), StringUtilities::normalizeLineEndings(trim($this->compiler->compile($template))));
     }
 
     public function testComplexUnknownEchoParametersAreCompiled()
@@ -245,6 +245,6 @@ EOT;
 {{ /%blade_host:component }}
 EXP;
 
-        $this->assertSame($expected, trim($this->compiler->compile($template)));
+        $this->assertSame(StringUtilities::normalizeLineEndings($expected), StringUtilities::normalizeLineEndings(trim($this->compiler->compile($template))));
     }
 }
