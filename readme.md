@@ -68,7 +68,7 @@ We can integrate existing Livewire components in our Antlers templates using the
 
 ## Flux Components
 
-If you'd like to use Flux, ensure you've also installed the Livewire addon.
+If you'd like to use [Flux](https://fluxui.dev/) components, ensure you've also installed the Livewire addon.
 
 Once you have Livewire and Flux installed in your site, you can use the `flux` tag to add the required styles and scripts to your layout:
 
