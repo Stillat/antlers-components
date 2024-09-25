@@ -21,7 +21,7 @@ This package provides a familiar syntax for Livewire components, and it is compi
 
 [https://statamic.com/addons/jonassiewertsen/livewire](https://statamic.com/addons/jonassiewertsen/livewire)
 
-In order to use the Livewire syntax, you will also need to install it using the following command:
+In order to use the Livewire/Flux syntax, you will also need to install it using the following command:
 
 ```bash
 composer require jonassiewertsen/statamic-livewire
@@ -66,7 +66,28 @@ We can integrate existing Livewire components in our Antlers templates using the
 {{ /collection:articles }}
 ```
 
-Using Antlers inside parameter values is acceptable.
+## Flux Components
+
+If you'd like to use Flux, ensure you've also installed the Livewire addon.
+
+Once you have Livewire and Flux installed in your site, you can use the `flux` tag to add the required styles and scripts to your layout:
+
+```antlers
+<!doctype html>
+<html>
+<head>
+
+    {{ flux:styles /}}
+</head>
+<body>
+    {{ template_content /}}
+
+    {{ flux:scripts /}}
+</body>
+</html>
+```
+
+You may now use Flux components directly within your Antlers templates (or within your Livewire components if you are using Antlers for those).
 
 ## Supported Parameter Types
 
