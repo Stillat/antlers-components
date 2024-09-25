@@ -6,10 +6,10 @@ use Stillat\BladeParser\Nodes\Components\ComponentNode;
 
 trait CompilesBladeComponents
 {
-    protected function compileBlade(ComponentNode $componentNode): string
+    protected function compileBlade(ComponentNode $componentNode, string $prefix = ''): string
     {
         $params = $this->compileParameters($componentNode);
-        $name = $this->getComponentName($componentNode);
+        $name = $prefix.$this->getComponentName($componentNode);
 
         $antlersTag = 'component';
         $paramName = 'component';

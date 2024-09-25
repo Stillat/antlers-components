@@ -14,13 +14,16 @@ use Stillat\BladeParser\Parser\DocumentParser;
 
 class AntlersCompiler
 {
-    use CompilesBladeComponents, CompilesParameters, CompilesLivewireComponents, CompilesAntlersComponents;
+    use CompilesAntlersComponents,
+        CompilesBladeComponents,
+        CompilesLivewireComponents,
+        CompilesParameters;
 
     protected static array $compileCache = [];
 
     public function compile(string $content): string
     {
-        if (! Str::contains($content, ['<a-', '<a:', '<x-', '<x:', '<livewire:', '<livewire-'])) {
+        if (! Str::contains($content, ['<a-', '<a:', '<x-', '<x:', '<livewire:', '<livewire-', '<flux:', '</flux:'])) {
             return $content;
         }
 
@@ -33,7 +36,7 @@ class AntlersCompiler
         $content = StringUtilities::normalizeLineEndings($content);
 
         $parser = new DocumentParser();
-        $parser->registerCustomComponentTags(['a', 'livewire'])
+        $parser->registerCustomComponentTags(['a', 'livewire', 'flux'])
             ->onlyParseComponents()
             ->parse($content);
 
@@ -48,6 +51,8 @@ class AntlersCompiler
                     $compiled .= $this->compileAntlersComponent($node);
                 } elseif (Str::startsWith($node->content, ['<livewire-', '<livewire:'])) {
                     $compiled .= $this->compileLivewireComponent($node);
+                } elseif (Str::startsWith($node->content, ['<flux:', '</flux:'])) {
+                    $compiled .= $this->compileBlade($node, 'flux::');
                 } else {
                     $compiled .= $this->compileBlade($node);
                 }
