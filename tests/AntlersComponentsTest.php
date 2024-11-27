@@ -127,6 +127,34 @@ EOT;
         $this->assertSame(StringUtilities::normalizeLineEndings($expected), $this->renderString($template));
     }
 
+    public function testExplicitSlotsCanBeRendered()
+    {
+        $template = <<<'EOT'
+<a:antlers_explicit_slots :$title>
+    <a-slot:title class="this thing">I am the title. {{ title }}</a-slot:title>
+    <a-slot:footer class="this other thing">I am the footer.</a-slot:footer>
+    
+    The slot content. {{ title }}
+</a:antlers_explicit_slots>
+EOT;
+
+        $expected = <<<'EOT'
+<div class="border">
+    <h1 class="border this thing">
+        I am the title. A Title!
+    </h1>
+
+    The slot content. A Title!
+
+    <footer class="text-gray-700 this other thing">
+        I am the footer.
+    </footer>
+</div>
+EOT;
+
+        $this->assertSame(StringUtilities::normalizeLineEndings($expected), $this->renderString($template, ['title' => 'A Title!']));
+    }
+
     public function testAttributesCanBeUsedInsideAntlersWithMainAttributes()
     {
         $template = <<<'EOT'

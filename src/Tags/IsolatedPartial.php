@@ -141,6 +141,8 @@ class IsolatedPartial extends Partial
 
             $data['slot'] = new ComponentSlot($defaultSlot, []);
         } else {
+            $extraSlots = [];
+
             foreach ($namedSlots as $slotName => $slotTemplate) {
                 $attributes = [];
 
@@ -149,10 +151,16 @@ class IsolatedPartial extends Partial
                 }
 
                 $evaluated = trim(Antlers::parse($slotTemplate[0], $data));
-                $data[$slotName] = new ArrayableString($evaluated, ['attributes' => new ComponentAttributeBag($attributes)]);
+                $slotValue = new ArrayableString($evaluated, ['attributes' => new ComponentAttributeBag($attributes)]);
+
+                $extraSlots[$slotName] = $slotValue;
+                $data[$slotName] = $slotValue;
             }
 
-            $data['slot'] = new ArrayableString($defaultSlot, ['attributes' => new ComponentAttributeBag($this->params->except('src')->all())]);
+            $data['slot'] = new ArrayableString($defaultSlot, array_merge(
+                ['attributes' => new ComponentAttributeBag($this->params->except('src')->all())],
+                $extraSlots
+            ));
         }
 
         $otherParams = $this->params->except('src');

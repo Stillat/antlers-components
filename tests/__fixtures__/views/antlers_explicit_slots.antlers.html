@@ -1,0 +1,11 @@
+<div {{ attributes.class(['border']).except('title') }}>
+    <h1 {{ slot.title.attributes.class(['border']) }}>
+        {{ slot.title }}
+    </h1>
+
+    {{ slot }}
+
+    <footer {{ footer.attributes.class(['text-gray-700']) }}>
+        {{ slot.footer }}
+    </footer>
+</div>
