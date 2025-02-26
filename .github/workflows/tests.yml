@@ -3,8 +3,6 @@ name: Run Tests
 on:
   push:
   pull_request:
-  schedule:
-    - cron: '0 0 * * *'
 
 jobs:
   php-tests:
@@ -43,8 +41,7 @@ jobs:
       - name: Update apt sources
         if: matrix.os == 'ubuntu-latest'
         run: |
-          sudo gem install apt-spy2
-          sudo apt-spy2 fix --commit --launchpad --country=US
+          sudo apt-get check || sudo apt --fix-broken install -y
           sudo apt-get update
 
       - name: Checkout code
