@@ -11,6 +11,11 @@ class Flux extends Tags
         return app('flux')->styles();
     }
 
+    public function appearance()
+    {
+        return app('flux')->fluxAppearance();
+    }
+
     public function scripts()
     {
         app('livewire')->forceAssetInjection();
