@@ -19,17 +19,17 @@ Antlers Components requires at least PHP 8.1 and:
 
 This package provides a familiar syntax for Livewire components, and it is compiled into the Antlers tags provided by this package:
 
-[https://statamic.com/addons/jonassiewertsen/livewire](https://statamic.com/addons/jonassiewertsen/livewire)
+[https://github.com/marcorieser/statamic-livewire](https://github.com/marcorieser/statamic-livewire)
 
 In order to use the Livewire/Flux syntax, you will also need to install it using the following command:
 
 ```bash
-composer require jonassiewertsen/statamic-livewire
+composer require marcorieser/statamic-livewire
 ```
 
 For support/reporting issues related to the Livewire functionality beyond compilation errors, please use the following GitHub link:
 
-[https://github.com/jonassiewertsen/statamic-livewire](https://github.com/jonassiewertsen/statamic-livewire)
+[https://github.com/marcorieser/statamic-livewire/issues](https://github.com/marcorieser/statamic-livewire/issues)
 
 ## Using Blade Components
 
@@ -70,6 +70,8 @@ We can integrate existing Livewire components in our Antlers templates using the
 
 If you'd like to use [Flux](https://fluxui.dev/) components, ensure you've also installed the Livewire addon.
 
+### Flux v1 Styles and Scripts
+
 Once you have Livewire and Flux installed in your site, you can use the `flux` tag to add the required styles and scripts to your layout:
 
 ```antlers
@@ -88,6 +90,28 @@ Once you have Livewire and Flux installed in your site, you can use the `flux` t
 ```
 
 You may now use Flux components directly within your Antlers templates (or within your Livewire components if you are using Antlers for those).
+
+### Flux v2 Styles and Scripts
+
+Once you have Livewire and Flux installed in your site, you can use the `flux` tag to add the required styles and scripts to your layout:
+
+```antlers
+<!doctype html>
+<html>
+<head>
+
+    {{ flux:appearance /}}
+</head>
+<body>
+    {{ template_content /}}
+
+    {{ flux:scripts /}}
+</body>
+</html>
+```
+
+You may now use Flux components directly within your Antlers templates (or within your Livewire components if you are using Antlers for those).
+
 
 ## Supported Parameter Types
 
