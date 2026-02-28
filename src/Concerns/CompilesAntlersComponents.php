@@ -26,7 +26,7 @@ trait CompilesAntlersComponents
             $suffix = '/';
         }
 
-        return "{{ %{$tagName} src=\"{$componentNode->name}\" {$params} {$suffix}}}";
+        return "{{ %{$tagName} isolated-partial-src=\"{$componentNode->name}\" {$params} {$suffix}}}";
     }
 
     protected function compileAntlersSlot(ComponentNode $componentNode): string

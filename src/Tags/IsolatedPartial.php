@@ -95,7 +95,7 @@ class IsolatedPartial extends Partial
 
     private function renderPartial(): string
     {
-        $src = $this->viewName($this->params->get('src'));
+        $src = $this->viewName($this->params->get('isolated-partial-src'));
         $view = view($src);
 
         [$frontMatter, $contents] = $this->extractContentAndFrontMatter($view->getPath());
@@ -118,7 +118,7 @@ class IsolatedPartial extends Partial
             $data['__depth'] = 0;
         }
 
-        $otherParams = $this->params->except(['src']);
+        $otherParams = $this->params->except(['isolated-partial-src']);
         $data['attributes'] = new ComponentAttributeBag($otherParams->all());
 
         self::$isolatedStack[] = $data;
@@ -158,12 +158,12 @@ class IsolatedPartial extends Partial
             }
 
             $data['slot'] = new ArrayableString($defaultSlot, array_merge(
-                ['attributes' => new ComponentAttributeBag($this->params->except('src')->all())],
+                ['attributes' => new ComponentAttributeBag($this->params->except('isolated-partial-src')->all())],
                 $extraSlots
             ));
         }
 
-        $otherParams = $this->params->except('src');
+        $otherParams = $this->params->except('isolated-partial-src');
         $data['attributes'] = new ComponentAttributeBag($otherParams->all());
 
         if (Str::endsWith($view->getPath(), '.blade.php')) {

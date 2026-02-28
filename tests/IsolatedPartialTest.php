@@ -97,6 +97,19 @@ EXP;
         $this->assertSame(StringUtilities::normalizeLineEndings($expected), $this->renderString($template));
     }
 
+    public function test_src_can_be_used_as_a_parameter()
+    {
+        $template = <<<'EOT'
+<a-src_test src="/images/photo.jpg" />
+EOT;
+
+        $expected = <<<'EXP'
+Image src: /images/photo.jpg
+EXP;
+
+        $this->assertSame(StringUtilities::normalizeLineEndings($expected), $this->renderString($template));
+    }
+
     public function test_blade_partials_are_isolated_from_parent_data()
     {
         $template = <<<'EOT'

@@ -15,7 +15,7 @@ class BasicTemplateTest extends CompilerTestCase
 EOT;
 
         $expected = <<<'EXPECTED'
-{{ %isolated_partial src="figure" :block="block" }}
+{{ %isolated_partial isolated-partial-src="figure" :block="block" }}
     {{ slot:title  }}The title{{ /slot:title }}
 {{ /%isolated_partial }}
 EXPECTED;
@@ -32,7 +32,7 @@ EXPECTED;
 EOT;
 
         $expected = <<<'EXPECTED'
-{{ %isolated_partial src="figure" :block="block" }}
+{{ %isolated_partial isolated-partial-src="figure" :block="block" }}
     {{ slot:title  }}The title{{ /slot:title }}
 {{ /%isolated_partial }}
 EXPECTED;
@@ -49,7 +49,7 @@ EXPECTED;
 EOT;
 
         $expected = <<<'EXPECTED'
-{{ %isolated_partial src="figure" :block="block" }}
+{{ %isolated_partial isolated-partial-src="figure" :block="block" }}
     {{ slot:title  }}The title{{ /slot:title }}
 {{ /%isolated_partial }}
 EXPECTED;
@@ -130,9 +130,9 @@ EXPECTED;
 EOT;
 
         $expected = <<<'EXPECTED'
-{{ %isolated_partial src="figure" :block="block" }}
+{{ %isolated_partial isolated-partial-src="figure" :block="block" }}
     {{ slot:title  }}The title{{ /slot:title }}
-    {{ %isolated_partial src="figure" :block="block" }}
+    {{ %isolated_partial isolated-partial-src="figure" :block="block" }}
         {{ slot:title  }}The title{{ /slot:title }}
     {{ /%isolated_partial }}
     {{ %blade_host:component component="alert" :title="title" }}
@@ -147,10 +147,10 @@ EOT;
 {{ %livewire:counter   /}}
 {{ %livewire:counter   /}}
 
-{{ %isolated_partial src="that" something="else" }}
-    {{ %isolated_partial src="figure" :block="block" }}
+{{ %isolated_partial isolated-partial-src="that" something="else" }}
+    {{ %isolated_partial isolated-partial-src="figure" :block="block" }}
         {{ slot:title  }}The title{{ /slot:title }}
-        {{ %isolated_partial src="figure" :block="block" }}
+        {{ %isolated_partial isolated-partial-src="figure" :block="block" }}
             {{ slot:title  }}The title{{ /slot:title }}
         {{ /%isolated_partial }}
         {{ %blade_host:component component="alert" :title="title" }}
@@ -177,7 +177,7 @@ EXPECTED;
 EOT;
 
         $expected = <<<'EOT'
-{{ %isolated_partial src="figure" :title="title" :a-different-title="aDifferentTitle" :title="title" title="title" title="title" /}}
+{{ %isolated_partial isolated-partial-src="figure" :title="title" :a-different-title="aDifferentTitle" :title="title" title="title" title="title" /}}
 EOT;
 
         $this->assertSame(StringUtilities::normalizeLineEndings($expected), trim($this->compiler->compile($template)));
