@@ -25,7 +25,7 @@ class ServiceProvider extends AddonServiceProvider
     {
         $this->app->resolving(RuntimeParser::class, function (RuntimeParser $parser) {
             $parser->preparse(function ($content) {
-                return (new AntlersCompiler())->compile($content);
+                return (new AntlersCompiler)->compile($content);
             });
         });
     }

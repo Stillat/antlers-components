@@ -14,7 +14,7 @@ class IsolatedPartialTest extends CompilerTestCase
         ],
     ];
 
-    public function testIsolatedDoesNotInheritData()
+    public function test_isolated_does_not_inherit_data()
     {
         $template = <<<'EOT'
 {{ articles }}
@@ -49,7 +49,7 @@ EOT;
         $this->assertSame(StringUtilities::normalizeLineEndings($expected), $this->renderString($template, $this->data));
     }
 
-    public function testIsolatedPartialsTossDataAway()
+    public function test_isolated_partials_toss_data_away()
     {
         $template = <<<'EOT'
 {{ title = 'Hello!'; }}
@@ -68,7 +68,7 @@ EXP;
         $this->assertSame(StringUtilities::normalizeLineEndings($expected), $this->renderString($template));
     }
 
-    public function testParentIsolatedPartialPassesDataToNestedPartials()
+    public function test_parent_isolated_partial_passes_data_to_nested_partials()
     {
         $template = <<<'EOT'
 {{ title = 'Hello!'; }}
@@ -97,7 +97,7 @@ EXP;
         $this->assertSame(StringUtilities::normalizeLineEndings($expected), $this->renderString($template));
     }
 
-    public function testBladePartialsAreIsolatedFromParentData()
+    public function test_blade_partials_are_isolated_from_parent_data()
     {
         $template = <<<'EOT'
 {{ articles }}

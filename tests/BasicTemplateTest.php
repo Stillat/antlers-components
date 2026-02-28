@@ -6,7 +6,7 @@ use Stillat\AntlersComponents\Utilities\StringUtilities;
 
 class BasicTemplateTest extends CompilerTestCase
 {
-    public function testItCompilesPartials()
+    public function test_it_compiles_partials()
     {
         $template = <<<'EOT'
 <a-figure :block="block">
@@ -23,7 +23,7 @@ EXPECTED;
         $this->assertSame(StringUtilities::normalizeLineEndings($expected), trim($this->compiler->compile($template)));
     }
 
-    public function testItCompilesIsolatedPartials()
+    public function test_it_compiles_isolated_partials()
     {
         $template = <<<'EOT'
 <a-figure :block="block">
@@ -40,7 +40,7 @@ EXPECTED;
         $this->assertSame(StringUtilities::normalizeLineEndings($expected), trim($this->compiler->compile($template)));
     }
 
-    public function testItCompilesAlternativeSyntax()
+    public function test_it_compiles_alternative_syntax()
     {
         $template = <<<'EOT'
 <a:figure :block="block">
@@ -57,7 +57,7 @@ EXPECTED;
         $this->assertSame(StringUtilities::normalizeLineEndings($expected), trim($this->compiler->compile($template)));
     }
 
-    public function testItCompilesLivewireComponents()
+    public function test_it_compiles_livewire_components()
     {
         $template = <<<'EOT'
 <livewire:counter />
@@ -72,7 +72,7 @@ EXPECTED;
         $this->assertSame(StringUtilities::normalizeLineEndings($expected), trim($this->compiler->compile($template)));
     }
 
-    public function testItCompilesBladeComponents()
+    public function test_it_compiles_blade_components()
     {
         $template = <<<'EOT'
 <x-alert :$title>
@@ -89,7 +89,7 @@ EXPECTED;
         $this->assertSame(StringUtilities::normalizeLineEndings($expected), trim($this->compiler->compile($template)));
     }
 
-    public function testItCompilesEverythingTogether()
+    public function test_it_compiles_everything_together()
     {
         $template = <<<'EOT'
 <a-figure :block="block">
@@ -170,7 +170,7 @@ EXPECTED;
         $this->assertSame(StringUtilities::normalizeLineEndings($expected), trim($this->compiler->compile($template)));
     }
 
-    public function testItCompilesParameters()
+    public function test_it_compiles_parameters()
     {
         $template = <<<'EOT'
 <a-figure :$title :$aDifferentTitle :title="title" title="title" title />
@@ -183,7 +183,7 @@ EOT;
         $this->assertSame(StringUtilities::normalizeLineEndings($expected), trim($this->compiler->compile($template)));
     }
 
-    public function testCompilingInterpolatedValues()
+    public function test_compiling_interpolated_values()
     {
         $template = <<<'EOT'
 <x-button @click="{{ handle }}++">
@@ -214,7 +214,7 @@ EXP;
         $this->assertSame(StringUtilities::normalizeLineEndings($expected), StringUtilities::normalizeLineEndings(trim($this->compiler->compile($template))));
     }
 
-    public function testSimpleUnknownEchoParametersAreCompiled()
+    public function test_simple_unknown_echo_parameters_are_compiled()
     {
         $template = <<<'EOT'
 <x-button {{ js_attributes }}>
@@ -231,7 +231,7 @@ EXP;
         $this->assertSame(StringUtilities::normalizeLineEndings($expected), StringUtilities::normalizeLineEndings(trim($this->compiler->compile($template))));
     }
 
-    public function testComplexUnknownEchoParametersAreCompiled()
+    public function test_complex_unknown_echo_parameters_are_compiled()
     {
         $template = <<<'EOT'
 <x-button {{ js_attributes | upper }}>

@@ -12,14 +12,14 @@ class BladeComponentsTest extends CompilerTestCase
 {
     protected BladeCompiler $blade;
 
-    public function setup(): void
+    protected function setup(): void
     {
         parent::setup();
         Blade::component(Alert::class);
         Blade::component(Card::class);
     }
 
-    public function testBasicBladeComponents()
+    public function test_basic_blade_components()
     {
         $template = <<<'EOT'
 {{ message = 'The message.'; }}
@@ -35,7 +35,7 @@ EOT;
         $this->assertSame(StringUtilities::normalizeLineEndings($expected), $this->renderString($template));
     }
 
-    public function testBladeComponentsWithSlots()
+    public function test_blade_components_with_slots()
     {
         $template = <<<'EOT'
 <x-card class="shadow-sm">
@@ -68,7 +68,7 @@ EXP;
         $this->assertSame(StringUtilities::normalizeLineEndings($expected), $this->renderString($template));
     }
 
-    public function testRenderingAnonymousComponents()
+    public function test_rendering_anonymous_components()
     {
         $template = <<<'EOT'
 <x-button />

@@ -6,7 +6,7 @@ use Stillat\AntlersComponents\Utilities\StringUtilities;
 
 class AntlersComponentsTest extends CompilerTestCase
 {
-    public function testItCanRenderBladeTemplates()
+    public function test_it_can_render_blade_templates()
     {
         $template = <<<'EOT'
 <a-hello title="{title}" />
@@ -15,7 +15,7 @@ EOT;
         $this->assertSame('I am the Blade:  A Title.', $this->renderString($template, ['title' => 'A Title']));
     }
 
-    public function testItCanRenderAntlersTemplates()
+    public function test_it_can_render_antlers_templates()
     {
         $template = <<<'EOT'
 <a-antlers_test :title="title" />
@@ -24,7 +24,7 @@ EOT;
         $this->assertSame('I am the Antlers: A Title.', $this->renderString($template, ['title' => 'A Title']));
     }
 
-    public function testItCanRenderBladeTemplatesWithSlots()
+    public function test_it_can_render_blade_templates_with_slots()
     {
         $template = <<<'EOT'
 <a:blade_slot>
@@ -43,7 +43,7 @@ EOT;
         $this->assertSame(StringUtilities::normalizeLineEndings($expected), $this->renderString($template));
     }
 
-    public function testItCanRenderBladeTemplateNamedSlotsWithoutBeingABladeComponent()
+    public function test_it_can_render_blade_template_named_slots_without_being_a_blade_component()
     {
         $template = <<<'EOT'
 <a:blade_named_slots>
@@ -71,7 +71,7 @@ EOT;
         $this->assertSame(StringUtilities::normalizeLineEndings($expected), $this->renderString($template));
     }
 
-    public function testItCanRenderBladeTemplateNamedSlotsWithoutBeingABladeComponentMixedStyles()
+    public function test_it_can_render_blade_template_named_slots_without_being_a_blade_component_mixed_styles()
     {
         $template = <<<'EOT'
 <a:blade_named_slots class="some extra classes">
@@ -99,7 +99,7 @@ EOT;
         $this->assertSame(StringUtilities::normalizeLineEndings($expected), $this->renderString($template));
     }
 
-    public function testAttributesCanBeUsedInsideAntlers()
+    public function test_attributes_can_be_used_inside_antlers()
     {
         $template = <<<'EOT'
 <a:antlers_template>
@@ -127,7 +127,7 @@ EOT;
         $this->assertSame(StringUtilities::normalizeLineEndings($expected), $this->renderString($template));
     }
 
-    public function testExplicitSlotsCanBeRendered()
+    public function test_explicit_slots_can_be_rendered()
     {
         $template = <<<'EOT'
 <a:antlers_explicit_slots :$title>
@@ -155,7 +155,7 @@ EOT;
         $this->assertSame(StringUtilities::normalizeLineEndings($expected), $this->renderString($template, ['title' => 'A Title!']));
     }
 
-    public function testAttributesCanBeUsedInsideAntlersWithMainAttributes()
+    public function test_attributes_can_be_used_inside_antlers_with_main_attributes()
     {
         $template = <<<'EOT'
 <a:antlers_template class="some custom stuff here">
@@ -183,7 +183,7 @@ EOT;
         $this->assertSame(StringUtilities::normalizeLineEndings($expected), $this->renderString($template));
     }
 
-    public function testAttributesCanBeUsedInsideAntlersWithMainAttributesIsolated()
+    public function test_attributes_can_be_used_inside_antlers_with_main_attributes_isolated()
     {
         $template = <<<'EOT'
 <a:antlers_template class="some custom stuff here">
@@ -211,7 +211,7 @@ EOT;
         $this->assertSame(StringUtilities::normalizeLineEndings($expected), $this->renderString($template));
     }
 
-    public function testParentNestedBehavior()
+    public function test_parent_nested_behavior()
     {
         $template = <<<'EOT'
 <a-parent :items="articles" :$title />

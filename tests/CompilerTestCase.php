@@ -22,10 +22,10 @@ class CompilerTestCase extends TestCase
 {
     protected AntlersCompiler $compiler;
 
-    public function setup(): void
+    protected function setup(): void
     {
         parent::setUp();
-        $this->compiler = new AntlersCompiler();
+        $this->compiler = new AntlersCompiler;
 
         /** @var ServiceProvider $provider */
         $provider = collect(app()->getProviders(ServiceProvider::class))->first();
@@ -99,9 +99,9 @@ class CompilerTestCase extends TestCase
         ModifierManager::$statamicModifiers = null;
         GlobalRuntimeState::resetGlobalState();
 
-        $documentParser = new DocumentParser();
-        $loader = new Loader();
-        $envDetails = new EnvironmentDetails();
+        $documentParser = new DocumentParser;
+        $loader = new Loader;
+        $envDetails = new EnvironmentDetails;
 
         if ($withCoreTagsAndModifiers) {
             $envDetails->setTagNames(app()->make('statamic.tags')->keys()->all());
@@ -113,13 +113,21 @@ class CompilerTestCase extends TestCase
         $processor = new NodeProcessor($loader, $envDetails);
         $processor->setData($data);
 
-        $runtimeParser = new RuntimeParser($documentParser, $processor, new AntlersLexer(), new LanguageParser());
+        $runtimeParser = new RuntimeParser($documentParser, $processor, new AntlersLexer, new LanguageParser);
         $processor->setAntlersParserInstance($runtimeParser);
 
         if ($withCoreTagsAndModifiers) {
             $runtimeParser->cascade(app(Cascade::class));
         }
 
-        return trim(StringUtilities::normalizeLineEndings((string) $runtimeParser->parse($text, $data)));
+        $currentLevel = GlobalRuntimeState::$isEvaluatingUserData;
+
+        try {
+            GlobalRuntimeState::$isEvaluatingUserData = false;
+
+            return trim(StringUtilities::normalizeLineEndings((string) $runtimeParser->parse($text, $data)));
+        } finally {
+            GlobalRuntimeState::$isEvaluatingUserData = $currentLevel;
+        }
     }
 }

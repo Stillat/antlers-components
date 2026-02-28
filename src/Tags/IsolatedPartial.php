@@ -31,7 +31,7 @@ class IsolatedPartial extends Partial
 
     public function __construct()
     {
-        $this->compiler = new AntlersCompiler();
+        $this->compiler = new AntlersCompiler;
     }
 
     /**
@@ -124,7 +124,7 @@ class IsolatedPartial extends Partial
         self::$isolatedStack[] = $data;
 
         $namedSlots = $this->getSlots($this->content);
-        $defaultSlot = trim(Antlers::parse($this->content, $data));
+        $defaultSlot = trim(Antlers::parse($this->content, $data, true));
         $proc = app(NodeProcessor::class);
 
         if (Str::endsWith($view->getPath(), '.blade.php')) {
@@ -135,7 +135,7 @@ class IsolatedPartial extends Partial
                     $attributes = $slotTemplate[1]->getParameterValues($proc, $data);
                 }
 
-                $evaluated = trim(Antlers::parse($slotTemplate[0], $data));
+                $evaluated = trim(Antlers::parse($slotTemplate[0], $data, true));
                 $data[$slotName] = new ComponentSlot($evaluated, $attributes);
             }
 
@@ -150,7 +150,7 @@ class IsolatedPartial extends Partial
                     $attributes = $slotTemplate[1]->getParameterValues($proc, $data);
                 }
 
-                $evaluated = trim(Antlers::parse($slotTemplate[0], $data));
+                $evaluated = trim(Antlers::parse($slotTemplate[0], $data, true));
                 $slotValue = new ArrayableString($evaluated, ['attributes' => new ComponentAttributeBag($attributes)]);
 
                 $extraSlots[$slotName] = $slotValue;
@@ -172,7 +172,7 @@ class IsolatedPartial extends Partial
             // Wrap the partial contents in a view tag pair, resolving
             // any context data against the frontmatter, effectively
             // resolving any parameter default values automatically.
-            $result = Antlers::parse('{{ view }}'.$contents.'{{ /view }}', $data);
+            $result = Antlers::parse('{{ view }}'.$contents.'{{ /view }}', $data, true);
         }
 
         array_pop(self::$isolatedStack);

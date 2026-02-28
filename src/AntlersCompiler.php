@@ -35,12 +35,12 @@ class AntlersCompiler
 
         $content = StringUtilities::normalizeLineEndings($content);
 
-        $parser = new DocumentParser();
+        $parser = new DocumentParser;
         $parser->registerCustomComponentTags(['a', 'livewire', 'flux'])
             ->onlyParseComponents()
             ->parse($content);
 
-        $doc = new Document();
+        $doc = new Document;
         $doc->syncFromParser($parser);
 
         $compiled = "\n";
