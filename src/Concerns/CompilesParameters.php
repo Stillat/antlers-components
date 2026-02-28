@@ -32,21 +32,37 @@ trait CompilesParameters
     protected function compileParameters(ComponentNode $component): string
     {
         $compiledParameters = [];
+        $stringBoolParams = [];
 
         foreach ($component->parameters as $parameter) {
             if ($parameter->type == ParameterType::Parameter) {
                 $compiledParameters[] = $parameter->name.'="'.$this->getParamValue($parameter->value).'"';
+
+                if ($parameter->value === 'true' || $parameter->value === 'false') {
+                    $stringBoolParams[] = $parameter->name;
+                }
             } elseif ($parameter->type == ParameterType::Attribute) {
                 $compiledParameters[] = $parameter->name.'="'.$parameter->name.'"';
             } elseif ($parameter->type == ParameterType::ShorthandDynamicVariable) {
                 $compiledParameters[] = ':'.$parameter->materializedName.'="'.mb_substr($parameter->name, 2).'"';
             } elseif ($parameter->type == ParameterType::DynamicVariable) {
-                $compiledParameters[] = ':'.$parameter->materializedName.'="'.$parameter->value.'"';
+                if ($parameter->value === 'true' || $parameter->value === 'false') {
+                    // Literal bool binding (:prop="true"/:prop="false") — compile without
+                    // the : prefix so Parameters::make() converts to a real bool, and
+                    // don't add to $stringBoolParams so BladeHost preserves it as bool.
+                    $compiledParameters[] = $parameter->materializedName.'="'.$parameter->value.'"';
+                } else {
+                    $compiledParameters[] = ':'.$parameter->materializedName.'="'.$parameter->value.'"';
+                }
             } elseif ($parameter->type == ParameterType::InterpolatedValue) {
                 $compiledParameters[] = $parameter->name.'="'.$this->getParamValue($parameter->value).'"';
             } elseif ($parameter->type == ParameterType::UnknownEcho) {
                 $compiledParameters[] = $this->compileUnknownEcho($parameter);
             }
+        }
+
+        if (! empty($stringBoolParams)) {
+            $compiledParameters[] = 'blade-host-str-params="'.implode(',', $stringBoolParams).'"';
         }
 
         return implode(' ', $compiledParameters);

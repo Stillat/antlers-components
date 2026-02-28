@@ -17,23 +17,6 @@ class BladeHost extends Tags
 
     protected static int $nestingDepth = 0;
 
-    private function normalizeParams(array $params): array
-    {
-        return collect($params)->map(function ($value) {
-            if ($value === 'true') {
-                return true;
-            }
-            if ($value === 'false') {
-                return false;
-            }
-            if ($value === 'null') {
-                return null;
-            }
-
-            return $value;
-        })->all();
-    }
-
     private function makeComponentTagCompiler(): ComponentTagCompiler
     {
         /** @var BladeCompiler $bladeCompiler */
@@ -48,12 +31,22 @@ class BladeHost extends Tags
         $componentName = $this->params->get('component');
         $className = $componentTagCompiler->componentClass($componentName);
 
-        $normalizedParams = $this->normalizeParams($this->params->except('component')->all());
-        $attributes = new ComponentAttributeBag($normalizedParams);
+        $params = $this->params->except('component')->all();
+
+        $stringBoolParams = array_filter(explode(',', $params['blade-host-str-params'] ?? ''));
+        unset($params['blade-host-str-params']);
+
+        foreach ($stringBoolParams as $paramName) {
+            if (array_key_exists($paramName, $params) && is_bool($params[$paramName])) {
+                $params[$paramName] = $params[$paramName] ? 'true' : 'false';
+            }
+        }
+
+        $attributes = new ComponentAttributeBag($params);
         $constructorParameters = [];
 
         $scopeData = $this->context->all();
-        $scopeData = array_merge($scopeData, $normalizedParams);
+        $scopeData = array_merge($scopeData, $params);
 
         $isAnonymous = false;
         $anonymousViewName = $className;
@@ -72,7 +65,7 @@ class BladeHost extends Tags
         if ($isAnonymous) {
             $constructorParameters = array_merge($constructorParameters, [
                 'view' => $anonymousViewName,
-                'data' => $normalizedParams,
+                'data' => $params,
             ]);
         }
 
