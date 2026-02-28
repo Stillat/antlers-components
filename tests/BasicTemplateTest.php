@@ -238,7 +238,7 @@ EXP;
 EOT;
 
         $expected = <<<'EOT'
-{{ %isolated_partial src="figure" x-bind:class="figureClasses" :block="block" /}}
+{{ %isolated_partial isolated-partial-src="figure" x-bind:class="figureClasses" :block="block" /}}
 EOT;
 
         $this->assertSame(StringUtilities::normalizeLineEndings($expected), trim($this->compiler->compile($template)));
