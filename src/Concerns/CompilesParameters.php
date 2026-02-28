@@ -44,6 +44,8 @@ trait CompilesParameters
                 $compiledParameters[] = ':'.$parameter->materializedName.'="'.$parameter->value.'"';
             } elseif ($parameter->type == ParameterType::InterpolatedValue) {
                 $compiledParameters[] = $parameter->name.'="'.$this->getParamValue($parameter->value).'"';
+            } elseif ($parameter->type == ParameterType::EscapedParameter) {
+                $compiledParameters[] = 'x-bind'.$parameter->materializedName.'="'.$this->getParamValue($parameter->value).'"';
             } elseif ($parameter->type == ParameterType::UnknownEcho) {
                 $compiledParameters[] = $this->compileUnknownEcho($parameter);
             }

@@ -211,6 +211,15 @@ EOT;
         $this->assertSame(StringUtilities::normalizeLineEndings($expected), $this->renderString($template));
     }
 
+    public function test_escaped_parameters_render_with_colon_prefix()
+    {
+        $template = <<<'EOT'
+<a-escaped_test ::class="text-bold" />
+EOT;
+
+        $this->assertSame('<div x-bind:class="text-bold">test</div>', $this->renderString($template));
+    }
+
     public function test_parent_nested_behavior()
     {
         $template = <<<'EOT'

@@ -231,6 +231,19 @@ EXP;
         $this->assertSame(StringUtilities::normalizeLineEndings($expected), StringUtilities::normalizeLineEndings(trim($this->compiler->compile($template))));
     }
 
+    public function test_escaped_parameters_are_compiled()
+    {
+        $template = <<<'EOT'
+<a-figure ::class="figureClasses" :block="block" />
+EOT;
+
+        $expected = <<<'EOT'
+{{ %isolated_partial src="figure" x-bind:class="figureClasses" :block="block" /}}
+EOT;
+
+        $this->assertSame(StringUtilities::normalizeLineEndings($expected), trim($this->compiler->compile($template)));
+    }
+
     public function test_complex_unknown_echo_parameters_are_compiled()
     {
         $template = <<<'EOT'
