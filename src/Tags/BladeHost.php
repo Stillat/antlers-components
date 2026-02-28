@@ -1,19 +1,5 @@
 <?php
 
-/**
- * PATCHED FILE - Do not edit vendor directly
- *
- * This is a patched version of stillat/antlers-components BladeHost.php
- * Fixes: https://github.com/Stillat/antlers-components/issues/10
- *
- * Changes:
- * - Added nesting depth tracking for nested Blade components
- * - Added normalizeParams() to convert string booleans ("false" -> false)
- * - Pre-populate component data so @aware works with parent props (variant, indicator, etc.)
- *
- * Remove this patch when the upstream PR is merged and package is updated.
- */
-
 namespace Stillat\AntlersComponents\Tags;
 
 use Illuminate\View\AnonymousComponent;
@@ -29,21 +15,8 @@ class BladeHost extends Tags
 
     protected static $slots = [];
 
-    /**
-     * Track nesting depth for pre-populating component data.
-     * This is separate from the actual component stack which isn't
-     * incremented until startComponent is called.
-     */
     protected static int $nestingDepth = 0;
 
-    /**
-     * Convert string boolean values to actual booleans.
-     * This handles cases like indicator="false" which passes the string "false".
-     *
-     * Note: :indicator="false" does NOT work because Antlers interprets "false"
-     * as a variable name lookup, not a literal. Use indicator="false" (without colon)
-     * or an Antlers variable: {{ show_indicator = false }} :indicator="show_indicator"
-     */
     private function normalizeParams(array $params): array
     {
         return collect($params)->map(function ($value) {
@@ -108,15 +81,11 @@ class BladeHost extends Tags
         $component = $className::resolve($constructorParameters + ((array) $attributes->getIterator()));
         $component->withName($componentName);
 
-        // Pre-populate component data so nested components can access parent props via @aware
-        // This mimics what startComponent does, but without starting the output buffer yet
         $componentData = $component->data();
-
-        // Use reflection to access protected properties
         $factoryReflection = new ReflectionClass($__env);
 
-        // Get current stack size plus our virtual nesting depth to determine index
-        // This ensures nested BladeHost components don't overwrite parent data
+        // Pre-populate componentData/currentComponentData via reflection so
+        // nested components can resolve parent props through @aware.
         $stackIndex = 0;
         if ($factoryReflection->hasProperty('componentStack')) {
             $stackProp = $factoryReflection->getProperty('componentStack');
@@ -126,7 +95,6 @@ class BladeHost extends Tags
         $stackIndex += self::$nestingDepth;
         self::$nestingDepth++;
 
-        // Pre-populate componentData so @aware can find parent props
         $existingData = [];
         if ($factoryReflection->hasProperty('componentData')) {
             $componentDataProp = $factoryReflection->getProperty('componentData');
@@ -136,7 +104,6 @@ class BladeHost extends Tags
             $componentDataProp->setValue($__env, $existingData);
         }
 
-        // Set currentComponentData for @aware lookups during slot parsing
         $previousData = [];
         if ($factoryReflection->hasProperty('currentComponentData')) {
             $currentDataProp = $factoryReflection->getProperty('currentComponentData');
@@ -145,28 +112,24 @@ class BladeHost extends Tags
             $currentDataProp->setValue($__env, array_merge($previousData, $componentData));
         }
 
-        // Capture slot content - nested components can now access parent data via @aware
-        $slotContent = $this->parse();
-
+        // startComponent must be called before parse() so that named slots
+        // registered by componentSlot() attach to the correct component.
         $__env->startComponent($component->resolveView(), $componentData);
         $component->withAttributes($attributes->getAttributes());
 
-        echo $slotContent;
+        echo $this->parse();
 
         $result = $__env->renderComponent();
 
-        // Restore previous currentComponentData after rendering
         if (isset($currentDataProp)) {
             $currentDataProp->setValue($__env, $previousData);
         }
 
-        // Clean up the pre-populated componentData after rendering
         if (isset($componentDataProp)) {
             unset($existingData[$stackIndex]);
             $componentDataProp->setValue($__env, $existingData);
         }
 
-        // Decrement nesting depth
         self::$nestingDepth--;
 
         return $result;
