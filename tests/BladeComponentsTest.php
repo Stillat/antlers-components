@@ -68,6 +68,24 @@ EXP;
         $this->assertSame(StringUtilities::normalizeLineEndings($expected), $this->renderString($template));
     }
 
+    public function test_aware_directive_with_nested_components()
+    {
+        $template = <<<'EOT'
+<x-radio.group variant="cards" indicator="false">
+    <x-radio label="Option 1"/>
+</x-radio.group>
+
+EOT;
+
+        $expected = <<<'EXP'
+<div data-variant="cards" data-indicator="false">
+    <label data-variant="cards" data-indicator="false">Option 1</label>
+</div>
+EXP;
+
+        $this->assertSame(StringUtilities::normalizeLineEndings($expected), $this->renderString($template));
+    }
+
     public function test_rendering_anonymous_components()
     {
         $template = <<<'EOT'

@@ -112,6 +112,10 @@ class BladeHost extends Tags
             $currentDataProp->setValue($__env, array_merge($previousData, $componentData));
         }
 
+        // Prevent flushStateIfDoneRendering() from wiping componentStack when
+        // a nested component's View::render() completes and renderCount hits 0.
+        $__env->incrementRender();
+
         // startComponent must be called before parse() so that named slots
         // registered by componentSlot() attach to the correct component.
         $__env->startComponent($component->resolveView(), $componentData);
@@ -120,6 +124,8 @@ class BladeHost extends Tags
         echo $this->parse();
 
         $result = $__env->renderComponent();
+
+        $__env->decrementRender();
 
         if (isset($currentDataProp)) {
             $currentDataProp->setValue($__env, $previousData);
