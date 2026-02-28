@@ -71,7 +71,7 @@ EXP;
     public function test_aware_directive_with_nested_components()
     {
         $template = <<<'EOT'
-<x-radio.group variant="cards" indicator="false">
+<x-radio.group variant="cards" :indicator="false">
     <x-radio label="Option 1"/>
 </x-radio.group>
 
@@ -82,6 +82,14 @@ EOT;
     <label data-variant="cards" data-indicator="false">Option 1</label>
 </div>
 EXP;
+
+        $this->assertSame(StringUtilities::normalizeLineEndings($expected), $this->renderString($template));
+    }
+
+    public function test_boolean_string_attributes_are_preserved()
+    {
+        $template = '<x-logo aria-hidden="true" />';
+        $expected = '<svg aria-hidden="true">...</svg>';
 
         $this->assertSame(StringUtilities::normalizeLineEndings($expected), $this->renderString($template));
     }
